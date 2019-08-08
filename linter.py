@@ -17,7 +17,6 @@ class Checkpatch(Linter):
 
     """Provides an interface to linux kernel 'checkpatch.pl' tool."""
 
-    syntax = 'c'
     cmd = 'checkpatch.pl -f @'
     executable = None
     version_re = r'Version: (?P<version>\d+\.\d+)'
@@ -26,7 +25,8 @@ class Checkpatch(Linter):
     tempfile_suffix = 'c'
 
     defaults = {
-        '--root=': '/path/to/kernel/source/tree'
+        '--root=': '/path/to/kernel/source/tree',
+        'selector': 'source.c, source.h'
     }
 
     # Here is several sample error/warning output:
@@ -59,7 +59,6 @@ class Checkpatch(Linter):
 
     def split_match(self, match):
         """Extract and return values from match."""
-
         match, line, col, error, warning, message, near = super().split_match(match)
 
         if match:
